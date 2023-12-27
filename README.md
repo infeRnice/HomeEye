@@ -1,4 +1,4 @@
 # HomeEye
 ```kotlin
 HomeEye pet project
-Всё находится в ветке master
+Проект находится в ветке master
