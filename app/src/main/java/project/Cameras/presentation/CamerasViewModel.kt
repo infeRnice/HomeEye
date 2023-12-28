@@ -29,7 +29,7 @@ class CamerasViewModel(private val repository: DataRepository, val realmDatabase
         loadDoors()
     }
 
-    private fun loadCameras() {
+    fun loadCameras() {
         viewModelScope.launch {
             try {
                 println("Loading cameras from repository")
@@ -56,13 +56,23 @@ class CamerasViewModel(private val repository: DataRepository, val realmDatabase
         }
     }
 
-    fun refreshDoors() {
+    // Функция для переключения состояния избранного у камеры
+    fun toggleFavoriteCamera(cameraId: Int) {
         viewModelScope.launch {
-            _isLoading.value = true
-            _doors.value = repository.getDoors(forceUpdate = true)
-            _isLoading.value = false
+            val updatedCameras = _cameras.value?.map { camera ->
+                if (camera.id == cameraId) {
+                    val newFavoriteStatus = !camera.favorites
+                    println("Toggle favorite for camera $cameraId: $newFavoriteStatus")
+                    camera.copy(favorites = newFavoriteStatus)
+                } else {
+                    camera
+                }
+            }
+            // Обновляем LiveData с новым списком камер
+            _cameras.value = updatedCameras
         }
     }
+
 
     fun updateDoorInList(updatedDoor: Door) {
         // Получаем текущий список дверей
@@ -74,8 +84,8 @@ class CamerasViewModel(private val repository: DataRepository, val realmDatabase
         // Устанавливаем обновленный список
         _doors.value = updatedDoors
     }
-
-    fun updateCameraInList(updatedCamera: Camera) {
+}
+/*    fun updateCameraInList(updatedCamera: Camera) {
         // Получаем текущий список дверей
         val currentCameras = _cameras.value ?: return
 
@@ -86,4 +96,11 @@ class CamerasViewModel(private val repository: DataRepository, val realmDatabase
         _cameras.value = updatedCameras
     }
 
-}
+    fun refreshDoors() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _doors.value = repository.getDoors(forceUpdate = true)
+            _isLoading.value = false
+        }
+    }*/
+

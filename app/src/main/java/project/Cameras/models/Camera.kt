@@ -8,6 +8,6 @@ data class Camera(
     val name: String,
     val snapshot: String, // Обновленное имя поля
     val room: String?, // Дополнительное поле, может быть null
-    val favorites: Boolean, // Дополнительное поле
-    val rec: Boolean // Дополнительное поле
+    val favorites: Boolean = false, // Дополнительное поле
+    val rec: Boolean = false// Дополнительное поле
 )

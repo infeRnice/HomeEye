@@ -8,5 +8,5 @@ data class Door(
     val name: String,
     val snapshot: String? = null, // Добавлено поле для изображения
     val room: String?,
-    val favorites: Boolean
+    val favorites: Boolean = false
 )

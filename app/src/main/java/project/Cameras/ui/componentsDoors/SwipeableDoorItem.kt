@@ -1,4 +1,6 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.wear.compose.material.ExperimentalWearMaterialApi
@@ -19,10 +22,11 @@ import androidx.wear.compose.material.FractionalThreshold
 import androidx.wear.compose.material.rememberSwipeableState
 import androidx.wear.compose.material.swipeable
 import coil.compose.AsyncImage
+import project.Cameras.R
 import project.Cameras.data.CamerasRealmDatabase
 import project.Cameras.models.Door
 import project.Cameras.presentation.CamerasViewModel
-import project.Cameras.ui.componentsCameras.PlayIconOverlay
+import project.Cameras.ui.componentsDoors.DoorContent
 import project.Cameras.ui.componentsDoors.ShowRenameDoorDialog
 import project.Cameras.ui.theme.GrayBack
 import kotlin.math.roundToInt
@@ -118,24 +122,3 @@ fun IconRow(modifier: Modifier, onEditClick: () -> Unit) {
     }
 }
 
-@Composable
-fun DoorContent(door: Door) {
-    Column(modifier = Modifier.padding(0.dp)) {
-        door.snapshot?.let { url ->
-            Box(contentAlignment = Alignment.Center) {
-                AsyncImage(
-                    model = url,
-                    contentDescription = door.name,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentScale = ContentScale.Crop
-                )
-                PlayIconOverlay(onClick = { /* Обработчик нажатия play */ })
-            }
-        }
-        Text(
-            text = door.name,
-            modifier = Modifier.padding(15.dp)
-        )
-    }
-}

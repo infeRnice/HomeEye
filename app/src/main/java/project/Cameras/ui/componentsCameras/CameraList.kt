@@ -35,7 +35,7 @@ fun CameraListByRoom(
     val camerasByRoom = cameraList.groupBy { it.room }
     SwipeRefresh(
         state = swipeRefreshState,
-        onRefresh = { viewModel.loadDoors() },
+        onRefresh = { viewModel.loadCameras() },
     ) {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -59,7 +59,10 @@ fun CameraListByRoom(
                         )
                     }
                     items(camerasInRoom) { camera ->
-                        SwipeableCameraItem(camera = camera)
+                        SwipeableCameraItem(
+                            camera = camera,
+                            onFavoriteClick = { viewModel.toggleFavoriteCamera(camera.id) }
+                        )
                     }
                 }
             }

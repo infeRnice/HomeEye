@@ -34,7 +34,7 @@ import kotlin.math.roundToInt
 @Composable
 fun SwipeableCameraItem(
     camera: Camera,
-
+    onFavoriteClick: (Camera) -> Unit
     ) {
     // Параметры свайпа
     val swipeableState = rememberSwipeableState(initialValue = 0)
@@ -58,7 +58,8 @@ fun SwipeableCameraItem(
                 .matchParentSize()
                 .padding(16.dp)
                 .align(Alignment.CenterEnd)
-                .background(GrayBack)
+                .background(GrayBack),
+            onStarClick = { onFavoriteClick(camera) }
         )
 
         // Передний слой (свайпаемый)
@@ -68,55 +69,21 @@ fun SwipeableCameraItem(
                 .fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            Box(contentAlignment = Alignment.Center) {
-                CameraContent(camera)
-            }
+            CameraContent(camera, onClick = {})
         }
     }
 }
 
 @Composable
-fun CameraContent(camera: Camera) {
-    Column(modifier = Modifier.padding(0.dp)) {
-        Box(contentAlignment = Alignment.Center) {
-            AsyncImage(
-                model = camera.snapshot,
-                contentDescription = camera.name,
-                modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Crop
-            )
-            PlayIconOverlay(onClick = { /* Обработчик нажатия play */ })
-        }
-        Text(
-            text = camera.name,
-            modifier = Modifier.padding(15.dp)
-        )
-    }
-}
-
-@Composable
-fun StarIconRow(modifier: Modifier) {
+fun StarIconRow(modifier: Modifier, onStarClick: () -> Unit) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = { /* Обработчик нажатия star */ }) {
+        IconButton(onClick = onStarClick) {
             Icon(Icons.Filled.Star, contentDescription = "Star", tint = Color.Gray)
         }
     }
 }
 
-@Composable
-fun PlayIconOverlay(onClick: () -> Unit) {
-    // Используйте painterResource, если ваше изображение находится в папке drawable
-    val playIcon: Painter = painterResource(id = R.drawable.play)
-
-    Image(
-        painter = playIcon,
-        contentDescription = "Play",
-        modifier = Modifier.size(48.dp)
-            .clickable(onClick = onClick)
-    )
-
-}
