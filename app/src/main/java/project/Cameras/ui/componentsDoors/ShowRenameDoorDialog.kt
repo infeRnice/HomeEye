@@ -1,4 +1,4 @@
-package project.Cameras.ui.components
+package project.Cameras.ui.componentsDoors
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button

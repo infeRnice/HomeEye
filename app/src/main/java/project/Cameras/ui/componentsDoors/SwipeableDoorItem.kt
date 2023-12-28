@@ -22,7 +22,8 @@ import coil.compose.AsyncImage
 import project.Cameras.data.CamerasRealmDatabase
 import project.Cameras.models.Door
 import project.Cameras.presentation.CamerasViewModel
-import project.Cameras.ui.components.ShowRenameDoorDialog
+import project.Cameras.ui.componentsCameras.PlayIconOverlay
+import project.Cameras.ui.componentsDoors.ShowRenameDoorDialog
 import project.Cameras.ui.theme.GrayBack
 import kotlin.math.roundToInt
 
@@ -42,7 +43,8 @@ fun SwipeableDoorItem(
             door.id,
             onRename = { newName = it; startRenaming = true },
             onDismiss = { showRenameDoorDialog = false }
-        )}
+        )
+    }
     // Проверяем, нужно ли начать процесс переименования
     if (startRenaming && newName.isNotEmpty()) {
         LaunchedEffect(newName) {
@@ -120,13 +122,16 @@ fun IconRow(modifier: Modifier, onEditClick: () -> Unit) {
 fun DoorContent(door: Door) {
     Column(modifier = Modifier.padding(0.dp)) {
         door.snapshot?.let { url ->
-            AsyncImage(
-                model = url,
-                contentDescription = door.name,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Crop
-            )
+            Box(contentAlignment = Alignment.Center) {
+                AsyncImage(
+                    model = url,
+                    contentDescription = door.name,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentScale = ContentScale.Crop
+                )
+                PlayIconOverlay(onClick = { /* Обработчик нажатия play */ })
+            }
         }
         Text(
             text = door.name,

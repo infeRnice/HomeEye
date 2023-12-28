@@ -1,4 +1,4 @@
-package project.Cameras.ui.components
+package project.Cameras.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import project.Cameras.presentation.CamerasViewModel
+import project.Cameras.ui.componentsCameras.CameraListByRoom
+import project.Cameras.ui.componentsDoors.DoorList
 
 @Composable
 fun HomeScreen(viewModel: CamerasViewModel) {
